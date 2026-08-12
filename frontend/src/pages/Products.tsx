@@ -122,7 +122,7 @@ const Products = () => {
                   <td style={{ fontFamily: 'monospace' }}>{p.sku}</td>
                   <td style={{ fontWeight: 500 }}>{p.name}</td>
                   <td>{p.category || '-'}</td>
-                  <td>${p.unitPrice.toFixed(2)}</td>
+                  <td>₹{p.unitPrice.toFixed(2)}</td>
                   <td>{p.currentStock}</td>
                   <td>
                     {p.currentStock <= p.minStockAlert ? (
@@ -159,7 +159,7 @@ const Products = () => {
               <input style={{ width: '100%', marginTop: '0.25rem' }} value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})} />
             </div>
             <div>
-              <label style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>Unit Price ($) *</label>
+              <label style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>Unit Price (₹) *</label>
               <input style={{ width: '100%', marginTop: '0.25rem' }} type="number" step="0.01" required value={formData.unitPrice} onChange={e => setFormData({...formData, unitPrice: Number(e.target.value)})} />
             </div>
             <div>

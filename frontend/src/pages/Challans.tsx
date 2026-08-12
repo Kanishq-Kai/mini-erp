@@ -174,7 +174,7 @@ const Challans = () => {
                   setChallanItems(newItems);
                 }}>
                   <option value="">-- Select Product --</option>
-                  {products.map(p => <option key={p.id} value={p.id}>{p.name} (Stock: {p.currentStock}) - ${p.unitPrice}</option>)}
+                  {products.map(p => <option key={p.id} value={p.id}>{p.name} (Stock: {p.currentStock}) - ₹{p.unitPrice}</option>)}
                 </select>
                 <input 
                   type="number" 
