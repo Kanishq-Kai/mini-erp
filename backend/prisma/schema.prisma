@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("SALES") // ADMIN, SALES, WAREHOUSE, ACCOUNTS
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  stockMovements StockMovement[]
+  challans       Challan[]
+}
+
+model Customer {
+  id            Int             @id @default(autoincrement())
+  name          String
+  mobile        String
+  email         String?
+  businessName  String?
+  gstNumber     String?
+  type          String // RETAIL, WHOLESALE, DISTRIBUTOR
+  address       String?
+  status        String  @default("LEAD") // LEAD, ACTIVE, INACTIVE
+  followUpDate  DateTime?
+  notes         String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  challans      Challan[]
+}
+
+model Product {
+  id            Int      @id @default(autoincrement())
+  name          String
+  sku           String   @unique
+  category      String?
+  unitPrice     Float
+  currentStock  Int      @default(0)
+  minStockAlert Int      @default(0)
+  location      String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  stockMovements StockMovement[]
+}
+
+model StockMovement {
+  id             Int          @id @default(autoincrement())
+  productId      Int
+  quantity       Int
+  type           String // IN, OUT
+  reason         String?
+  createdById    Int
+  createdAt      DateTime     @default(now())
+
+  product        Product      @relation(fields: [productId], references: [id])
+  createdBy      User         @relation(fields: [createdById], references: [id])
+}
+
+model Challan {
+  id            Int           @id @default(autoincrement())
+  challanNumber String        @unique
+  customerId    Int
+  totalQuantity Int           @default(0)
+  status        String @default("DRAFT") // DRAFT, CONFIRMED, CANCELLED
+  createdById   Int
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  customer      Customer      @relation(fields: [customerId], references: [id])
+  createdBy     User          @relation(fields: [createdById], references: [id])
+  items         ChallanItem[]
+}
+
+model ChallanItem {
+  id           Int      @id @default(autoincrement())
+  challanId    Int
+  productId    Int
+  quantity     Int
+  
+  // Snapshot fields
+  productName  String
+  sku          String
+  unitPrice    Float
+
+  challan      Challan  @relation(fields: [challanId], references: [id], onDelete: Cascade)
+}

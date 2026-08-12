@@ -1,0 +1,26 @@
+{
+	"info": {
+		"_postman_id": "b1b2b3b4-c5c6-d7d8-e9e0-f1f2f3f4f5f6",
+		"name": "Mini ERP API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth - Login",
+			"request": {
+				"method": "POST",
+				"header": [ { "key": "Content-Type", "value": "application/json" } ],
+				"body": { "mode": "raw", "raw": "{\"email\":\"admin@minierp.com\",\"password\":\"password123\"}" },
+				"url": { "raw": "http://localhost:5000/api/auth/login", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "auth", "login"] }
+			}
+		},
+		{
+			"name": "Get Customers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": { "raw": "http://localhost:5000/api/customers", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "customers"] }
+			}
+		}
+	]
+}
